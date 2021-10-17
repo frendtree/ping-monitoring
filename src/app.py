@@ -14,6 +14,7 @@ mail_account = os.environ['MAIL_ACCOUNT']
 mail_password = os.environ['MAIL_PASSWORD']
 mail_from = os.environ['MAIL_FROM']
 mail_to = os.environ['MAIL_TO']
+mail_cc = os.environ.get('MAIL_CC', '')
 
 
 def send_mail():
@@ -24,6 +25,7 @@ def send_mail():
     msg['Subject'] = subject
     msg['From'] = mail_from
     msg['To'] = mail_to
+    msg['Cc'] = mail_cc
 
     server = smtplib.SMTP(mail_smtp_host, mail_smtp_port)
     server.starttls()
