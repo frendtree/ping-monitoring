@@ -19,8 +19,7 @@ mail_cc = os.environ.get('MAIL_CC', '')
 
 def send_mail():
     subject = '[CRITICAL] PING failed ' + ping_host
-    now = datetime.datetime.now(timezone('Asia/Tokyo'))
-    body = 'PING to {0} failed at {1:%Y-%m-%d %H:%M:%S}'.format(ping_host, now)
+    body = 'PING to {0} failed at {1:%Y-%m-%d %H:%M:%S}'.format(ping_host, get_datetime_now())
     msg = MIMEText(body, 'html')
     msg['Subject'] = subject
     msg['From'] = mail_from
@@ -34,8 +33,12 @@ def send_mail():
     server.quit()
 
 
+def get_datetime_now():
+    return datetime.datetime.now(timezone('Asia/Tokyo'))
+
+
 def main():
-    print('PING to {0}'.format(ping_host))
+    print('PING to {0} at {1:%Y-%m-%d %H:%M:%S}'.format(ping_host, get_datetime_now()))
     ping = pings.Ping()
     response = ping.ping(ping_host, 2)
     if response.is_reached():
